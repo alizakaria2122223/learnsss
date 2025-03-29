@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduAdapt - Personalized Learning Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Design System */
+        :root {
+            --primary: #3a86ff;
+            --primary-light: #a7c7ff;
+            --primary-dark: #2667cc;
+            --text: #2b2d42;
+            --text-light: #8d99ae;
+            --background: #ffffff;
+            --card-bg: #f8f9fa;
+            --footer-bg: #2b2d42;
+            --footer-text: #edf2f4;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --error: #f94144;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: var(--card-bg);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            background-color: var(--background);
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Page 1: Learning Assessment */
+        .assessment-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: #e9ecef;
+            z-index: 1;
+            transform: translateY(-50%);
+        }
+
+        .progress-bar {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 4px;
+            background-color: var(--primary);
+            z-index: 2;
+            transform: translateY(-50%);
+            transition: width 0.3s ease;
+            width: 10%;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 3;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .step.active .step-number {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .step.completed .step-number {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .step.active .step-label {
+            color: var(--primary);
+            font-weight: 500;
+}
+
+        .step.completed .step-label {
+            color: var(--text);
+        }
+
+        .question-container {
+            margin-bottom: 2rem;
+        }
+
+        .question {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 8px;
+            background-color: var(--card-bg);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option:hover {
+            background-color: #e9ecef;
+        }
+
+        .option input {
+            margin-right: 1rem;
+            accent-color: var(--primary);
+        }
+
+        .option-label {
+            flex: 1;
+        }
+
+        .assessment-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .support-section {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            text-align: center;
+        }
+
+        /* Page 2: Upload Your Content */
+        .upload-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--primary-light);
+            border-radius: var(--border-radius);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background-color: rgba(58, 134, 255, 0.05);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .upload-instructions {
+            margin-bottom: 1rem;
+        }
+
+        .file-types {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .file-type {
+            padding: 0.3rem 0.8rem;
+            background-color: var(--primary-light);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--primary-dark);
+        }
+
+        .processing-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .processing-option {
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            background-color: var(--card-bg);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .processing-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .processing-option.selected {
+            border-color: var(--primary);
+            background-color: rgba(58, 134, 255, 0.1);
+        }
+
+        .option-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .preview-container {
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .preview-content {
+            min-height: 200px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .preview-placeholder {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+
+        .upload-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        /* Page 3: Personalized Learning Dashboard */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .learning-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .method-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--border-radius);
+            color: white;
+            padding: 2rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .method-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+            z-index: 1;
+        }
+
+        .method-card-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .method-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .visual-card {
+            background: linear-gradient(to right, #4361ee, #3a0ca3);
+        }
+
+        .audio-card {
+            background: linear-gradient(to right, #7209b7, #480ca8);
+        }
+
+        .interactive-card {
+            background: linear-gradient(to right, #f72585, #b5179e);
+        }
+
+        .progress-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .progress-card h3 {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .progress-card h3 i {
+            margin-right: 10px;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 5px;
+            background-color: var(--primary);
+            transition: width 0.5s ease;
+        }
+
+        .badges-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .badge {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background-color: var(--card-bg);
+            border-radius: 50px;
+            font-size: 0.9rem;
+        }
+
+        .badge i {
+            margin-right: 5px;
+            color: var(--success);
+        }
+
+        .accessibility-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .accessibility-feature {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+        }
+
+        .accessibility-feature i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-right: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column a {
+            color: var(--footer-text);
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .footer-column a:hover {
+            opacity: 1;
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .progress-steps {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.5rem;
+            }
+
+            .progress-steps::before {
+                display: none;
+            }
+
+            .step {
+                flex-direction: row;
+                gap: 1rem;
+            }
+
+            .assessment-footer {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .upload-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Page Navigation */
+        .page {
+            display: none;
+            padding: 2rem 0 4rem;
+        }
+
+        .page.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo" onclick="showPage('home')">
+                    <i class="fas fa-brain"></i>EduAdapt
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#" onclick="showPage('home')">Home</a></li>
+                    <li><a href="#" onclick="showPage('assessment')">Assessment</a></li>
+                    <li><a href="#" onclick="showPage('upload')">Upload</a></li>
+                    <li><a href="#" onclick="showPage('dashboard')">Dashboard</a></li>
+                    <li><a href="#" class="btn btn-primary">Sign Up</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <section id="home" class="page active">
+        <div class="container">
+            <div class="hero">
+                <h1>Personalized Learning Hub</h1>
+                <p>Discover your ideal learning style and access customized educational content tailored just for you.</p>
+                <div>
+                    <a href="#" class="btn btn-primary" onclick="showPage('assessment')">Start Assessment</a>
+                    <a href="#" class="btn btn-outline" onclick="showPage('dashboard')">View Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page 1: Learning Assessment -->
+    <section id="assessment" class="page">
+        <div class="container">
+            <div class="hero">
+                <h1>Learning Assessment</h1>
+                <p>Answer a few questions to help us understand your learning preferences and create a personalized experience.</p>
+            </div>
+
+            <div class="assessment-container">
+                <div class="progress-steps">
+                    <div class="progress-bar" style="width: 10%;"></div>
+                    <div class="step active">
+                        <div class="step-number">1</div>
+                        <div class="step-label">Initial Assessment</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Detailed Diagnosis</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Results</div>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <div class="question">When learning something new, I prefer:</div>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q1" value="visual">
+                            <span class="option-label">Seeing diagrams, charts, or illustrations</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="audio">
+                            <span class="option-label">Listening to explanations or lectures</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="interactive">
+                            <span class="option-label">Hands-on practice or interactive exercises</span>
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q1" value="reading">
+                            <span class="option-label">Reading written explanations or text</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="assessment-footer">
+                    <div class="progress-text">Progress: 10%</div>
+                    <div>
+                        <button class="btn btn-secondary" disabled>Previous</button>
+                        <button class="btn btn-primary">Next</button>
+                    </div>
+                </div>
+
+                <div class="support-section">
+                    <p>Need help with the assessment?</p>
+                    <button class="btn btn-outline">Contact Support</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page 2: Upload Your Content -->
+    <section id="upload" class="page">
+        <div class="container">
+            <div class="hero">
+                <h1>Upload Your Content</h1>
+                <p>Upload your learning materials and we'll transform them into formats that match your preferred learning style.</p>
+            </div>
+
+            <div class="upload-container">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h3>Drag & Drop your files here</h3>
+                    <p class="upload-instructions">or click to browse your files</p>
+                    <div class="file-types">
+                        <span class="file-type">PDF</span>
+                        <span class="file-type">DOC</span>
+                        <span class="file-type">PPT</span>
+                        <span class="file-type">JPG</span>
+                        <span class="file-type">MP4</span>
+                    </div>
+                    <input type="file" id="fileInput" style="display: none;">
+                </div>
+
+                <h3>Select Processing Option:</h3>
+                <div class="processing-options">
+                    <div class="processing-option" onclick="selectOption(this)">
+                        <div class="option-icon">
+                            <i class="fas fa-align-left"></i>
+                        </div>
+                        <h4>Simplified Text</h4>
+                        <p>Converts content into an easy-to-read format with clear explanations.</p>
+                    </div>
+                    <div class="processing-option" onclick="selectOption(this)">
+                        <div class="option-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <h4>Visual Summary</h4>
+                        <p>Generates infographics and illustrated explanations of key concepts.</p>
+                    </div>
+                    <div class="processing-option" onclick="selectOption(this)">
+                        <div class="option-icon">
+                            <i class="fas fa-volume-up"></i>
+                        </div>
+                        <h4>Audio Version</h4>
+                        <p>Converts text to clear, narrated speech for auditory learning.</p>
+                    </div>
+                </div>
+
+                <div class="preview-container" id="previewContainer">
+                    <div class="preview-header">
+                        <h3>Preview</h3>
+                        <button class="btn btn-secondary">Download</button>
+                    </div>
+                    <div class="preview-content">
+                        <p class="preview-placeholder">Your processed content will appear here</p>
+                    </div>
+                </div>
+
+                <div class="upload-actions">
+                    <button class="btn btn-secondary">Cancel</button>
+                    <button class="btn btn-outline">Save Draft</button>
+                    <button class="btn btn-primary">Process & Download</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page 3: Personalized Learning Dashboard -->
+    <section id="dashboard" class="page">
+        <div class="container">
+            <div class="hero">
+                <h1>Personalized Learning Experience</h1>
+                <p>Your customized learning dashboard based on your preferences and progress.</p>
+            </div>
+
+            <div class="dashboard-container">
+                <h2>Your Learning Methods</h2>
+                <div class="learning-methods">
+                    <div class="method-card visual-card">
+                        <div class="method-card-content">
+                            <h3>Visual Learning</h3>
+                            <p>Diagrams, infographics, and visual explanations tailored for you.</p>
+                            <button class="btn btn-outline" style="margin-top: 1rem;">Explore</button>
+                        </div>
+                    </div>
+                    <div class="method-card audio-card">
+                        <div class="method-card-content">
+                            <h3>Audio Learning</h3>
+                            <p>Listen to narrated content at your preferred pace and style.</p>
+                            <button class="btn btn-outline" style="margin-top: 1rem;">Explore</button>
+                        </div>
+                    </div>
+                    <div class="method-card interactive-card">
+                        <div class="method-card-content">
+                            <h3>Interactive Learning</h3>
+                            <p>Quizzes, exercises, and hands-on practice activities.</p>
+                            <button class="btn btn-outline" style="margin-top: 1rem;">Explore</button>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>Your Progress</h2>
+                <div class="progress-section">
+                    <div class="progress-card card">
+                        <h3><i class="fas fa-check-circle"></i>Completed Lessons</h3>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" style="width: 80%;"></div>
+                        </div>
+                        <p>24 out of 30 lessons completed (80%)</p>
+                    </div>
+                    <div class="progress-card card">
+                        <h3><i class="fas fa-trophy"></i>Achievements</h3>
+                        <div class="badges-container">
+                            <div class="badge">
+                                <i class="fas fa-bolt"></i> Quick Learner
+                            </div>
+                            <div class="badge">
+                                <i class="fas fa-star"></i> Perfect Score
+                            </div>
+                            <div class="badge">
+                                <i class="fas fa-book"></i> Bookworm
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>Accessibility Features</h2>
+                <div class="accessibility-features">
+                    <div class="accessibility-feature">
+                        <i class="fas fa-volume-up"></i>
+                        <div>
+                            <h4>Text-to-Speech</h4>
+                            <p>Listen to any text content</p>
+                        </div>
+                    </div>
+                    <div class="accessibility-feature">
+                        <i class="fas fa-adjust"></i>
+                        <div>
+                            <h4>Contrast Adjustment</h4>
+                            <p>Change color contrast for better visibility</p>
+                        </div>
+                    </div>
+                    <div class="accessibility-feature">
+                        <i class="fas fa-font"></i>
+                        <div>
+                            <h4>Font Customization</h4>
+                            <p>Adjust font size and style</p>
+                        </div>
+                    </div>
+                    <div class="accessibility-feature">
+                        <i class="fas fa-keyboard"></i>
+                        <div>
+                            <h4>Keyboard Navigation</h4>
+                            <p>Navigate without a mouse</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>EduAdapt</h3>
+                    <p>Personalized learning for everyone.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Features</h3>
+                    <ul>
+                        <li><a href="#">Learning Methods</a></li>
+                        <li><a href="#">Progress Tracking</a></li>
+                        <li><a href="#">Accessibility Tools</a></li>
+                        <li><a href="#">Personalized Content</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Feedback</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 EduAdapt. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Page navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // Upload area interaction
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const previewContainer = document.getElementById('previewContainer');
+
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                uploadArea.innerHTML = `
+                    <div class="upload-icon">
+                        <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                    </div>
+                    <h3>${e.target.files[0].name}</h3>
+                    <p>${(e.target.files[0].size / 1024).toFixed(1)} KB</p>
+                `;
+                previewContainer.style.display = 'block';
+            }
+        });
+
+        // Drag and drop
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight() {
+            uploadArea.style.borderColor = 'var(--primary)';
+            uploadArea.style.backgroundColor = 'rgba(58, 134, 255, 0.1)';
+        }
+
+        function unhighlight() {
+            uploadArea.style.borderColor = 'var(--primary-light)';
+            uploadArea.style.backgroundColor = 'transparent';
+        }
+
+        uploadArea.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            fileInput.files = files;
+            const event = new Event('change');
+            fileInput.dispatchEvent(event);
+        }
+
+        // Processing option selection
+        function selectOption(element) {
+            document.querySelectorAll('.processing-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            element.classList.add('selected');
+        }
+
+        // Mobile menu toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenu.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+    </script>
+</body>
+</html>
